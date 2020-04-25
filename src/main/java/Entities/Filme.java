@@ -1,7 +1,6 @@
 package Entities;
 
 import Enums.Categoria;
-import java.util.Date;
 import java.util.List;
 
 public class Filme {

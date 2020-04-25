@@ -1,12 +1,14 @@
 package Entities;
 
+import Enums.SituacaoCinema;
+
 public class Cinema {
     private int id;
     private String name;
     private String initials;
     private String adress;
     private String cnpj;
-    private String active;
+    private SituacaoCinema situacao;
 
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id;}
@@ -18,6 +20,6 @@ public class Cinema {
     public void setAdress(String adress) { this.adress = adress;}
     public String getCnpj() { return this.cnpj;}
     public void setCnpj(String cnpj) { this.cnpj = cnpj;}
-    public String getActive() { return this.active;}
-    public void setActive(String active) { this.active = active;}
+    public SituacaoCinema getSituacaoCinema() { return this.situacao;}
+    public void setActive(SituacaoCinema situacao) { this.situacao = situacao;}
 }
