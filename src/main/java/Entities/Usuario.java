@@ -1,10 +1,6 @@
 package Entities;
 
 import Enums.Permissao;
-import Enums.SituacaoCinema;
-import Enums.SituacaoSessao;
-
-import java.util.Dictionary;
 import java.util.List;
 
 public class Usuario {
