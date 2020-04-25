@@ -11,13 +11,12 @@ import static spark.Spark.get;
 
 
 public class AdministradorDAO {
-    public Filme AddMoviesByCine()
+    public void AddMoviesByCine()
     {
-        Usuario usuario = UsuarioBL.getById();
+        Usuario usuario = new Usuario();//UsuarioBL.getById();
         if(usuario.getPermissao() == Permissao.FULLACESS)
         {
-            ArrayList<Filme> array = new ArrayList();
-            get("/", (req, res) -> res.body());
+
         }
 
     }
