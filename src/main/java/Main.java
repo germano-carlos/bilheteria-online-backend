@@ -1,7 +1,10 @@
-import static spark.Spark.*;
+import static spark.Spark.init;
 
 public class Main {
     public static void main(String[] args) {
-        get("/hello", (req, res) -> "Hello World");
+
+        init();
+        Rotas routes = new Rotas();
+
     }
 }
