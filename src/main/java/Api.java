@@ -1,22 +1,24 @@
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.IOException;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.simple.JSONObject;
 
 public class Api {
 
-    public static String[] __call(String method, String title, String year)
+    public static JsonObject __call(String method, String title, String year)
     {
         String[] pairs;
         try {
             if(year != null)
                 year = "&y="+year;
+            else
+                year = "";
 
             String url = "http://www.omdbapi.com/?apikey=88151055&t="+title+""+year;
 
@@ -30,17 +32,14 @@ public class Api {
             }
 
             String JsonString = convertStreamToString(conn.getInputStream());
-            JsonString = JsonString.substring(1, JsonString.length()-1);
-            JsonString = JsonString.replace("{","");
-            JsonString = JsonString.replace("}","");
-            JsonString = JsonString.replace(":",",");
 
-            pairs = JsonString.split(",");
+            JsonParser parser = new JsonParser();
+            JsonObject obj = (JsonObject) parser.parse(JsonString);
 
             //BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
             conn.disconnect();
-            return pairs;
+            return obj;
 
         } catch (IOException ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
