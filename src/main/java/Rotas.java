@@ -1,7 +1,4 @@
-import spark.route.Routes;
-
 import static spark.Spark.get;
-import static spark.Spark.init;
 
 public class Rotas {
 
