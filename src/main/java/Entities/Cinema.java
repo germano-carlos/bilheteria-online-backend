@@ -13,7 +13,7 @@ public class Cinema {
     public String getName() { return this.name;}
     public void setName(String name) { this.name = name;}
     public String getInitials() { return this.initials;}
-    public void setId(String initials) { this.initials = initials;}
+    public void setInitials(String initials) { this.initials = initials;}
     public String getAdress() { return this.adress;}
     public void setAdress(String adress) { this.adress = adress;}
     public String getCnpj() { return this.cnpj;}

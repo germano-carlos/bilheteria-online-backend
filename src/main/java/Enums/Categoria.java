@@ -20,8 +20,8 @@ public enum Categoria
     private int idCategoria;
     private String nomeCategoria;
 
-    Categoria(int i, String nomeCategoria) {
-        this.idCategoria = i;
+    Categoria(int id, String nomeCategoria) {
+        this.idCategoria = id;
         this.nomeCategoria = nomeCategoria;
     }
 }
