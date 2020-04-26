@@ -13,7 +13,6 @@ public class Api {
 
     public static JsonObject __call(String method, String title, String year)
     {
-        String[] pairs;
         try {
             if(year != null)
                 year = "&y="+year;
@@ -35,8 +34,6 @@ public class Api {
 
             JsonParser parser = new JsonParser();
             JsonObject obj = (JsonObject) parser.parse(JsonString);
-
-            //BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
             conn.disconnect();
             return obj;
