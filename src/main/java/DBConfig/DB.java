@@ -1,5 +1,7 @@
+package DBConfig;
+
 import java.sql.*;
-class DB {
+public class DB {
     private Connection con;
 
     public  DB() throws SQLException, ClassNotFoundException {
