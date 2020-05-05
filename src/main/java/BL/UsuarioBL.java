@@ -3,7 +3,11 @@ package BL;
 import DAO.UsuarioDAO;
 import Entities.Usuario;
 
+import spark.Request;
+import spark.Response;
+
 public class UsuarioBL {
+
     public static boolean loginBL(String email, String password) throws Exception {
         boolean login = false;
 
@@ -24,5 +28,20 @@ public class UsuarioBL {
         return login;
     }
 
+    //Adiciona usuario
+    public static Object add(Request request, Response response){
+        String cpf = request.queryParams("cpf");
+        String name = request.queryParams("name");
+        String adress = request.queryParams("adress");
+        String password = request.queryParams("password");
+
+        Usuario usuario = new Usuario(cpf, name, adress, password);
+
+        UsuarioDAO.add(usuario);
+
+        response.status(201);
+
+        return usuario;
+    }
 
 }

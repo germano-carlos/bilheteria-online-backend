@@ -11,6 +11,13 @@ public class Usuario {
     private Permissao userType;
     private List<Operadora> wallet;
 
+    public Usuario(String cpf, String name, String adress, String password){
+        this.cpf = cpf;
+        this.name = name;
+        this.adress = adress;
+        this.password = password;
+    }
+
     public String getCpf() { return this.cpf;}
     public void setCpf(String cpf) { this.cpf = cpf;}
     public String getName() { return this.name;}
