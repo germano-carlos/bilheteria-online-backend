@@ -1,5 +1,5 @@
 package DAO;
-import DBConfig.DB;
+import Utils.DB;
 import Entities.Usuario;
 import Enums.Permissao;
 
@@ -30,7 +30,7 @@ public class UsuarioDAO {
     public static Usuario getByCredentials(String email, String password) throws Exception {
         try
         {
-            Usuario user = new Usuario("a","a","s","a");
+            Usuario user = new Usuario();
             //Inicializo Conexão
             DB Connection = new DB();
             //Realiza consulta

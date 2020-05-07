@@ -1,4 +1,4 @@
-package DBConfig;
+package Utils;
 
 import java.sql.*;
 public class DB {

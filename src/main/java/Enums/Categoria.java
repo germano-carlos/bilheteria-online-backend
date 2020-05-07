@@ -2,26 +2,26 @@ package Enums;
 
 public enum Categoria
 {
-    ACAO(1,"ACAO"),
-    ANIMACAO(2,"ANIMACAO"),
-    AVENTURA(3,"AVENTURA"),
-    COMEDIA(4,"COMEDIA"),
-    DOCUMENTARIO(5, "DOCUMENTARIO"),
-    FANTASIA(6, "FANTASIA"),
-    FAROESTE(7,"FAROESTE"),
-    FICCAO(8,"FICCAO"),
-    GUERRA(9,"GUERRA"),
-    MUSICAL(10,"MUSICAL"),
-    ROMANCE(11,"ROMANCE"),
-    SUSPENSE(12,"SUSPENSE"),
-    TERROR(13,"TERROR"),
-    DRAMA(14,"DRAMA");
+    ACAO("1"),
+    ANIMACAO("2"),
+    AVENTURA("3"),
+    COMEDIA("4"),
+    DOCUMENTARIO("5"),
+    FANTASIA("6"),
+    FAROESTE("7"),
+    FICCAO("8"),
+    GUERRA("9"),
+    MUSICAL("10"),
+    ROMANCE("11"),
+    SUSPENSE("12"),
+    TERROR("13"),
+    DRAMA("14");
 
-    private int idCategoria;
-    private String nomeCategoria;
+    private String idCategoria;
 
-    Categoria(int id, String nomeCategoria) {
+    Categoria(String id) {
         this.idCategoria = id;
-        this.nomeCategoria = nomeCategoria;
     }
+
+    public String getId () { return this.idCategoria; }
 }

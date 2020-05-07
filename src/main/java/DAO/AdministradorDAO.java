@@ -14,8 +14,6 @@ public class AdministradorDAO {
             throw new Exception("Você não possui permissão para acessar este recurso");
         }
 
-        Filme filme = new Filme();
-
 
     }
 }

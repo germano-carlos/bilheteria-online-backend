@@ -12,6 +12,16 @@ public class Filme {
     private String finalDate;
     private List<Categoria> categoryList;
 
+    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist)
+    {
+        this.name = name;
+        this.synopsis = synopsis;
+        this.releaseData = releaseData;
+        this.finalDate = finalDate;
+        this.cineList  = cineList;
+        this.categoryList = categorylist;
+    }
+
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id;}
     public String getName() { return this.name;}
