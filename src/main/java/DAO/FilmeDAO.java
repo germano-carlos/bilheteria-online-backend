@@ -29,10 +29,8 @@ public class FilmeDAO {
         return moviesList;
     }
 
-    public static JsonObject getFilmeByParams(Request request, Response response)
+    public static JsonObject getFilmeByParams(String title, String year)
     {
-        String title = "sonic";//request.queryParams("title");
-        String year = "2020";//request.queryParams("year");
         JsonObject json = Api.__call("GET",title, year);
 
         return json;

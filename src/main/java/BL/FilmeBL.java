@@ -7,6 +7,7 @@ import Enums.Categoria;
 import Enums.Permissao;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
@@ -23,19 +24,22 @@ public class FilmeBL {
 
     public static Filme add(Request req, Response res) throws Exception {
         //Recupera a permissao do usuário da sessão
-        if(req.session().attribute("userPermission") == Permissao.FULLACESS)
-        {
-            JsonObject dados = FilmeDAO.getFilmeByParams(req, res);
+        /*if(req.session().attribute("userPermission") == Permissao.FULLACESS)
+        {*/
+            JsonParser jsonParser = new JsonParser();
+            JsonObject params = (JsonObject) jsonParser.parse(req.body());
+
+            JsonObject dados = FilmeDAO.getFilmeByParams(params.get("title").toString(),params.get("year").toString());
 
             if(dados.has("Error"))
             {
                 throw new Exception("Movie not found, please try again");
             }
 
-            String name = dados.get("Title").toString();
-            String synopsis = dados.get("Plot").toString();
-            String releaseData = req.attribute("releaseData");
-            String finalDate = req.attribute("finalDate");
+            String name = dados.get("Title").toString().replace("\"","");;
+            String synopsis = dados.get("Plot").toString().replace("\"","");;
+            String releaseData = params.get("releaseData").toString().replace("\"","");;
+            String finalDate = params.get("finalDate").toString().replace("\"","");;
             List<Cinema> cineList = new ArrayList<Cinema>();
             List<Categoria> categorylist = compareClass(dados.get("Genre").toString());
 
@@ -44,9 +48,9 @@ public class FilmeBL {
 
             res.status(201);
             return movie;
-        }
+        //}
 
-        return null;
+//        return null;
     }
 
     private static List<Categoria> compareClass(String moviesCategories)

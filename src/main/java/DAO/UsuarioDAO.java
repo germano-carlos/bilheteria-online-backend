@@ -59,12 +59,14 @@ public class UsuarioDAO {
     public static void add(Usuario usuario){
         try{
             DB connection = new DB();
-            String sql = "INSERT INTO user (cpf, name, adress, password) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO user (cpf, name, adress, password, birth, sex) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
             stmt.setString(1, usuario.getCpf());
             stmt.setString(2, usuario.getName());
             stmt.setString(3, usuario.getAdress());
             stmt.setString(4, usuario.getPassword());
+            stmt.setString(5, usuario.getBirth());
+            stmt.setString(6, usuario.getSex().toString());
             stmt.execute();
             stmt.close();
             connection.closeConnection();

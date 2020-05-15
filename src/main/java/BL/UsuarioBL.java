@@ -3,6 +3,8 @@ package BL;
 import DAO.UsuarioDAO;
 import Entities.Usuario;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
@@ -36,13 +38,16 @@ public class UsuarioBL {
     }
 
     //Adiciona usuario
-    public static Object add(Request request, Response response){
-        String cpf = request.queryParams("cpf");
-        String name = request.queryParams("name");
-        String adress = request.queryParams("adress");
-        String password = request.queryParams("password");
-        String birth = request.queryParams("birth");
-        Character sex = request.queryParams("sex").charAt(0);
+    public static Usuario add(Request request, Response response){
+        JsonParser jsonParser = new JsonParser();
+        JsonObject params = (JsonObject) jsonParser.parse(request.body());
+
+        String cpf = params.get("cpf").toString().replace("\"","");
+        String name = params.get("name").toString().replace("\"","");;
+        String adress = params.get("adress").toString().replace("\"","");;
+        String password = params.get("password").toString().replace("\"","");;
+        String birth = params.get("birth").toString().replace("\"","");;
+        Character sex = params.get("sex").toString().charAt(1);
 
 
         Usuario usuario = new Usuario(cpf, name, adress, password,birth,sex);
