@@ -3,16 +3,15 @@ package Enums;
 public enum Permissao
 {
 
-    FULLACESS (1,"administrador"),
-    CADASTRO (2,"cadastroComercial"),
-    FINANCEIRO (3,"cadastroFinanceiro"),
-    USUARIO (4,"usuario");
+    FULLACESS ("1"),
+    CADASTRO ("2"),
+    FINANCEIRO ("3"),
+    USUARIO ("4"),
+    GUEST("5");
 
-    private int idPermissao;
-    private String nomePermissao;
+    private String idPermissao;
 
-    Permissao(int id, String nomePermissao) {
+    Permissao(String id) {
         this.idPermissao = id;
-        this.nomePermissao = nomePermissao;
     }
 }

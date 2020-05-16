@@ -31,7 +31,7 @@ public class FilmeBL {
 
             JsonObject dados = FilmeDAO.getFilmeByParams(params.get("title").toString(),params.get("year").toString());
 
-            if(dados.has("Error"))
+            if(dados.has("Error") || dados == null)
             {
                 throw new Exception("Movie not found, please try again");
             }

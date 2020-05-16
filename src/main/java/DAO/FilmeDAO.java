@@ -31,6 +31,10 @@ public class FilmeDAO {
 
     public static JsonObject getFilmeByParams(String title, String year)
     {
+        title = title.replace("\"","");
+        title = title.replace(" ","+");
+        year = year.replace("\"","");
+
         JsonObject json = Api.__call("GET",title, year);
 
         return json;

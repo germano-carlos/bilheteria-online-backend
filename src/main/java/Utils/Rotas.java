@@ -23,5 +23,6 @@ public class Rotas {
         get("/", (req, res) -> "Hello World");
         post("/addUsuario",  (request, response) -> { return UsuarioBL.add(request,response); });
         post("/addFilme", (request, response) -> { return FilmeBL.add(request,response); });
+        post("/login", (request, response) -> { return UsuarioBL.loginBL(request,response); });
     }
 }

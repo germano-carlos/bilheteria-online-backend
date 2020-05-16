@@ -10,16 +10,20 @@ import spark.Response;
 
 public class UsuarioBL {
 
-    public static boolean loginBL(Request request, Response response) throws Exception {
+    public static Usuario loginBL(Request request, Response response) throws Exception {
         boolean login = false;
-        String email = request.queryParams("email");
-        String password = request.queryParams("password");
 
-        boolean credentials = UsuarioDAO.checkCredentials(email, password);
+        JsonParser jsonParser = new JsonParser();
+        JsonObject params = (JsonObject) jsonParser.parse(request.body());
+
+        String cpf = params.get("cpf").toString().replace("\"","");
+        String password =  params.get("password").toString().replace("\"","");
+
+        boolean credentials = UsuarioDAO.checkCredentials(cpf, password);
         if(credentials)
         {
             login = true;
-            Usuario user = UsuarioDAO.getByCredentials(email, password);
+            Usuario user = UsuarioDAO.getByCredentials(cpf, password);
 
             request.session(true);
             request.session().attribute("userName",user.getName());
@@ -28,13 +32,16 @@ public class UsuarioBL {
             request.session().attribute("userPermission",user.getPermissao());
             // Create Session
             // Redirect? another controller, where are our views?
+
+
+
+            return user;
         }
         else
         {
             throw new Exception("Credenciais Incorretas, favor inserir o email e/ou senha novamente");
         }
 
-        return login;
     }
 
     //Adiciona usuario
@@ -44,13 +51,13 @@ public class UsuarioBL {
 
         String cpf = params.get("cpf").toString().replace("\"","");
         String name = params.get("name").toString().replace("\"","");;
-        String adress = params.get("adress").toString().replace("\"","");;
+        String address = params.get("address").toString().replace("\"","");;
         String password = params.get("password").toString().replace("\"","");;
         String birth = params.get("birth").toString().replace("\"","");;
         Character sex = params.get("sex").toString().charAt(1);
 
 
-        Usuario usuario = new Usuario(cpf, name, adress, password,birth,sex);
+        Usuario usuario = new Usuario(cpf, name, address, password,birth,sex);
 
         UsuarioDAO.add(usuario);
 
