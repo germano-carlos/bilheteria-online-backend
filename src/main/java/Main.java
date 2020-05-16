@@ -1,15 +1,19 @@
-import BL.FilmeBL;
 import Utils.Rotas;
-import spark.Request;
-import spark.Response;
 
-import java.sql.SQLException;
 import static spark.Spark.init;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         init();
+        Cors cors = new Cors();
         Rotas routes = new Rotas();
     }
+
+    private static void enableCORS(final String origin, final String methods, final String headers) {
+
+
+    }
+
 }
+
