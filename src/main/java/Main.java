@@ -9,11 +9,5 @@ public class Main {
         Cors cors = new Cors();
         Rotas routes = new Rotas();
     }
-
-    private static void enableCORS(final String origin, final String methods, final String headers) {
-
-
-    }
-
 }
 

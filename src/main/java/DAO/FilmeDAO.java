@@ -1,6 +1,8 @@
 package DAO;
 
+import Entities.Cinema;
 import Entities.Filme;
+import Enums.Permissao;
 import Utils.Api;
 import Utils.DB;
 import com.google.gson.JsonObject;
@@ -8,6 +10,7 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +42,32 @@ public class FilmeDAO {
         return json;
     }
 
-    public static void add(Filme movie, Request request)
+    public static void add(Filme movie)
     {
         try{
             DB connection = new DB();
+            //Inserindo um filme na tabela movie
             String sql = "INSERT INTO movie (name, synopsis) VALUES (?, ?)";
             PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
             stmt.setString(1, movie.getName());
             stmt.setString(2, movie.getSynopsis());
             stmt.execute();
 
-            //Descobrir como buscar o Id após a inserção
-            String inteiro = "1";
+            //Buscando o id do Filme Inserido
+            sql = "SELECT MAX(id) as id FROM movie";
+            String movieId = " ";
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs != null && rs.next()) {
+                movieId = rs.getString("id");
+            }
+
+            Cinema cine = movie.getCineList().get(0);
+            String cineId = Integer.toString(cine.getId());
+
             sql = "INSERT INTO cine_movie (cine_id, movie_id, release_data, final_date) VALUES (?, ?, ?, ?)";
             stmt = connection.getConnection().prepareStatement(sql);
-            stmt.setString(1, "1");//request.attribute("cine_id"));
-            stmt.setString(2, inteiro);
+            stmt.setString(1, cineId);//request.attribute("cine_id"));
+            stmt.setString(2, movieId);
             stmt.setString(3, movie.getReleaseData());
             stmt.setString(4, movie.getFinalDate());
             stmt.execute();
@@ -65,7 +78,7 @@ public class FilmeDAO {
             {
                 sql = "INSERT INTO movie_category (movie_id, category_id) VALUES (? , ?)";
                 stmt = connection.getConnection().prepareStatement(sql);
-                stmt.setString(1, inteiroM);
+                stmt.setString(1, movieId);
                 stmt.setString(2, movie.getCategoryList().get(i).getId());
                 stmt.execute();
             }

@@ -41,10 +41,11 @@ public class FilmeBL {
             String releaseData = params.get("releaseData").toString().replace("\"","");;
             String finalDate = params.get("finalDate").toString().replace("\"","");;
             List<Cinema> cineList = new ArrayList<Cinema>();
+            cineList.add(CinemaBL.getById(params.get("cinemaId").toString().replace("\"","")));
             List<Categoria> categorylist = compareClass(dados.get("Genre").toString());
 
             Filme movie = new Filme(name,synopsis,releaseData,finalDate,cineList,categorylist);
-            FilmeDAO.add(movie, req);
+            FilmeDAO.add(movie);
 
             res.status(201);
             return movie;
