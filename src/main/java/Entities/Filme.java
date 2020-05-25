@@ -1,6 +1,10 @@
 package Entities;
 
 import Enums.Categoria;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.List;
 
 public class Filme {
@@ -36,4 +40,14 @@ public class Filme {
     public void setFinalDate(String finalDate) { this.finalDate = finalDate;}
     public List<Categoria> getCategoryList() { return this.categoryList;}
     public void setCategoryList(List<Categoria> categoryList) { this.categoryList = categoryList;}
+    public JsonObject to_Object(Filme movie)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(movie);
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject object = (JsonObject) jsonParser.parse(json);
+
+        return object;
+    }
 }

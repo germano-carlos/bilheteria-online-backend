@@ -1,6 +1,9 @@
 package Entities;
 
 import Enums.SituacaoCartao;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Operadora {
     private int id;
@@ -22,4 +25,14 @@ public class Operadora {
     public void setExpirationDate(String expirationDate) { this.expirationDate = expirationDate;}
     public SituacaoCartao getSituacaoCartao() { return this.situacaoCartao;}
     public void setActive(SituacaoCartao situacaoCartao) { this.situacaoCartao = situacaoCartao;}
+    public JsonObject to_Object(Operadora card)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(card);
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject object = (JsonObject) jsonParser.parse(json);
+
+        return object;
+    }
 }

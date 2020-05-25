@@ -1,6 +1,9 @@
 package Entities;
 
 import Enums.Permissao;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.List;
 
@@ -43,4 +46,14 @@ public class Usuario {
     public void setPermissao(Permissao userType) { this.userType = userType;}
     public List<Operadora> getWallet() { return this.wallet;}
     public void setWallet(List<Operadora> wallet) { this.wallet = wallet;}
+    public JsonObject to_Object(Usuario user)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject object = (JsonObject) jsonParser.parse(json);
+
+        return object;
+    }
 }

@@ -3,14 +3,13 @@ package Enums;
 public enum SituacaoCartao
 {
 
-    ATIVO (1,"CARTAOATIVO"),
-    INATIVO (2,"CARTAOINATIVO");
+    ATIVO ("1"),
+    INATIVO ("2");
 
-    private int idSituacao;
-    private String nomeSituacao;
+    private String idSituacao;
 
-    SituacaoCartao(int id, String nomeSituacao) {
+    SituacaoCartao(String id) {
         this.idSituacao = id;
-        this.nomeSituacao = nomeSituacao;
     }
+    public String getId () { return this.idSituacao; }
 }

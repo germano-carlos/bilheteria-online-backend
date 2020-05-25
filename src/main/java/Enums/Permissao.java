@@ -14,4 +14,5 @@ public enum Permissao
     Permissao(String id) {
         this.idPermissao = id;
     }
+    public String getId () { return this.idPermissao; }
 }

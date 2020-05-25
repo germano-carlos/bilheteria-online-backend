@@ -22,7 +22,7 @@ public class FilmeBL {
     }
     public List<Filme> getAllMoviesEnabledBL(){ return FilmeDAO.getAllMoviesEnabledDAO();}
 
-    public static Filme add(Request req, Response res) throws Exception {
+    public static JsonObject add(Request req, Response res) throws Exception {
         //Recupera a permissao do usuário da sessão
         /*if(req.session().attribute("userPermission") == Permissao.FULLACESS)
         {*/
@@ -48,7 +48,7 @@ public class FilmeBL {
             FilmeDAO.add(movie);
 
             res.status(201);
-            return movie;
+            return movie.to_Object(movie);
         //}
 
 //        return null;

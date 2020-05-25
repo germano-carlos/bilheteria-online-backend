@@ -1,6 +1,9 @@
 package Entities;
 
 import Enums.SituacaoCinema;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Cinema {
     private int id;
@@ -22,4 +25,14 @@ public class Cinema {
     public void setCnpj(String cnpj) { this.cnpj = cnpj;}
     public SituacaoCinema getSituacaoCinema() { return this.situacao;}
     public void setActive(SituacaoCinema situacao) { this.situacao = situacao;}
+    public JsonObject to_Object(Cinema cine)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(cine);
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject object = (JsonObject) jsonParser.parse(json);
+
+        return object;
+    }
 }

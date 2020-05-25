@@ -1,6 +1,10 @@
 package Entities;
 
 import Enums.SituacaoSessao;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.util.Dictionary;
 
 public class Sessao {
@@ -20,4 +24,14 @@ public class Sessao {
     public void setUserArmChair(Dictionary<String, String> userArmChair) { this.userArmChair = userArmChair;}
     public SituacaoSessao getSituacaoSessao() { return this.situacaoSessao;}
     public void setSituacaoSessao(SituacaoSessao situacaoSessao) { this.situacaoSessao = situacaoSessao;}
+    public JsonObject to_Object(Sessao session)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(session);
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject object = (JsonObject) jsonParser.parse(json);
+
+        return object;
+    }
 }
