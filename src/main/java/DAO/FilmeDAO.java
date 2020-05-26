@@ -2,16 +2,15 @@ package DAO;
 
 import Entities.Cinema;
 import Entities.Filme;
-import Enums.Permissao;
 import Utils.Api;
 import Utils.DB;
 import com.google.gson.JsonObject;
-import spark.Request;
-import spark.Response;
+import com.mysql.cj.mysqlx.protobuf.MysqlxDatatypes;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,5 +88,67 @@ public class FilmeDAO {
         } catch (SQLException | ClassNotFoundException e ) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static Filme update(JsonObject params) throws Exception {
+        DB connection = new DB();
+
+        String updateReleaseDate = " ";
+        String updateFinalDate = " ";
+        String paramsReleaseDate = params.get("releaseData").toString().replace("\"","");
+        String paramsfinalDate = params.get("finalDate").toString().replace("\"","");;
+        int movieId = params.get("movieId").getAsInt();
+        int cineId = params.get("cineId").getAsInt();
+
+        //Valido os parametros recebidos
+        if(paramsfinalDate.isEmpty() && paramsReleaseDate.isEmpty())
+            throw new Exception("Nenhum dos valores podem ser vazios !");
+        if(!paramsReleaseDate.isEmpty())
+            updateReleaseDate = "release_data = '"+paramsReleaseDate+"'";
+        if(!paramsfinalDate.isEmpty())
+            updateFinalDate = ",final_date = '"+paramsfinalDate+"'";
+        if(paramsReleaseDate.isEmpty() && !paramsfinalDate.isEmpty())
+            updateFinalDate = updateFinalDate.replace(",","");
+
+        String sql = "UPDATE CINE_MOVIE "
+                    + "SET " + updateReleaseDate
+                             + updateFinalDate +
+                     " WHERE cine_id = '"+cineId+"' " +
+                     "AND movie_id = '"+movieId+"'";
+
+        PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+        stmt.execute();
+
+        Filme filme = getByParams(movieId, cineId);
+
+        if(!paramsfinalDate.isEmpty())
+            filme.setReleaseData(paramsfinalDate);
+        if(!paramsReleaseDate.isEmpty())
+            filme.setFinalDate(paramsReleaseDate);
+
+        return filme;
+    }
+    public static Filme getByParams(int movieId, int cineId) throws SQLException, ClassNotFoundException {
+        Filme movie = new Filme();
+
+        //Inicializo Conexão
+        DB Connection = new DB();
+        //Realiza consulta
+        Statement stmt = Connection.getConnection().createStatement();
+        String sql = "SELECT * FROM movie m " +
+                    " join cine_movie cm on cm.movie_id = m.id " +
+                    " where cine_id ="+cineId+" and movie_id ="+movieId+"";
+
+        ResultSet rs=stmt.executeQuery(sql);
+        if(rs != null && rs.next()) {
+            //Instancia atributos do Usuário que está logando
+            movie.setSynopsis(rs.getString("synopsis"));
+            movie.setFinalDate(rs.getString("final_date"));
+            movie.setReleaseData(rs.getString("release_data"));
+            movie.setName(rs.getString("name"));
+            movie.setId(rs.getInt("id"));
+        }
+
+        return  movie;
     }
 }

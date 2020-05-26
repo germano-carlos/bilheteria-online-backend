@@ -36,10 +36,10 @@ public class FilmeBL {
                 throw new Exception("Movie not found, please try again");
             }
 
-            String name = dados.get("Title").toString().replace("\"","");;
-            String synopsis = dados.get("Plot").toString().replace("\"","");;
-            String releaseData = params.get("releaseData").toString().replace("\"","");;
-            String finalDate = params.get("finalDate").toString().replace("\"","");;
+            String name = dados.get("Title").toString().replace("\"","");
+            String synopsis = dados.get("Plot").toString().replace("\"","");
+            String releaseData = params.get("releaseData").toString().replace("\"","");
+            String finalDate = params.get("finalDate").toString().replace("\"","");
             List<Cinema> cineList = new ArrayList<Cinema>();
             cineList.add(CinemaBL.getById(params.get("cinemaId").toString().replace("\"","")));
             List<Categoria> categorylist = compareClass(dados.get("Genre").toString());
@@ -86,5 +86,15 @@ public class FilmeBL {
 
 
         return categoriaList;
+    }
+
+    public static JsonObject update(Request req, Response res) throws Exception {
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject params = (JsonObject) jsonParser.parse(req.body());
+
+        Filme newFilme = FilmeDAO.update(params);
+
+        return newFilme.to_Object(newFilme);
     }
 }
