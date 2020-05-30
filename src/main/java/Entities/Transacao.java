@@ -1,5 +1,9 @@
 package Entities;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class Transacao {
     private int compradorId;
     private int sessaoId;
@@ -65,5 +69,16 @@ public class Transacao {
 
     public int getCompradorId() {
         return compradorId;
+    }
+
+    public JsonObject to_Object(Transacao transaction)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(transaction);
+
+        JsonParser jsonParser = new JsonParser();
+        JsonObject object = (JsonObject) jsonParser.parse(json);
+
+        return object;
     }
 }
