@@ -13,6 +13,13 @@ public class Operadora {
     private String expirationDate;
     private SituacaoCartao situacaoCartao;
 
+    public Operadora(String nickname, String cardNumber, String cvv, String expirationDate){
+        this.nickname = nickname;
+        this.cardNumber = cardNumber;
+        this.cvv = cvv;
+        this.expirationDate = expirationDate;
+    }
+
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id;}
     public String getNickname() { return this.nickname;}
