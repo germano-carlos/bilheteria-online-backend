@@ -9,9 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class OperadoraDAO {
-    public static String add(Operadora operadora){
+    public static void add(Operadora operadora){
         String sql;
-        String operadoraId = " ";
         try{
             DB connection = new DB();
             sql = "INSERT INTO operator (nickname, card_number, cvv, expiration_date, card_situation) VALUES (?, ?, ?, ?, ?)";
@@ -23,16 +22,24 @@ public class OperadoraDAO {
             stmt.setString(4, "Valido");
             stmt.execute();
 
-            //Buscando o id da Operadora Inserida
-            sql = "SELECT MAX(id) as id FROM movie";
+            stmt.close();
+            connection.closeConnection();
+        } catch (SQLException | ClassNotFoundException e ) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static String lastInsertId(){
+        String sql = "SELECT MAX(id) as id FROM movie";
+        String operadoraId = "";
+        try{
+            DB connection = new DB();
+            PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
             ResultSet rs=stmt.executeQuery(sql);
             if(rs != null && rs.next()) {
                 operadoraId = rs.getString("id");
             }
-
-            stmt.close();
-            connection.closeConnection();
-        } catch (SQLException | ClassNotFoundException e ) {
+           } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
         return operadoraId;
