@@ -42,6 +42,8 @@ public class UsuarioDAO {
                 user.setCpf(rs.getString("cpf"));
                 user.setAdress(rs.getString("adress"));
                 user.setName(rs.getString("name"));
+                user.setSex(rs.getString("sex").charAt(0));
+                user.setBirth(rs.getString("birth"));
                 user.setPassword(rs.getString("password"));
                 deparaPermission(rs.getString("permission_id"), user);
                 user.setWallet(null);
@@ -79,13 +81,16 @@ public class UsuarioDAO {
 
     public static void deparaPermission(String permissionId, Usuario user)
     {
-        if(permissionId == "1")
+        if(permissionId.equals("1"))
             user.setPermissao(Permissao.FULLACESS);
-        if(permissionId == "2")
+
+        if(permissionId.equals("2"))
             user.setPermissao(Permissao.CADASTRO);
-        if(permissionId == "3")
+
+        if(permissionId.equals("3"))
             user.setPermissao(Permissao.FINANCEIRO);
-        if(permissionId == "4")
+
+        if(permissionId.equals("4"))
             user.setPermissao(Permissao.USUARIO);
     }
 }

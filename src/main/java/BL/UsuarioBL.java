@@ -28,8 +28,8 @@ public class UsuarioBL {
             request.session(true);
             request.session().attribute("userName",user.getName());
             request.session().attribute("userBirth",user.getBirth());
-            request.session().attribute("userSex",user.getSex());
-            request.session().attribute("userPermission",user.getPermissao());
+            request.session().attribute("userSex", user.getSex());
+            request.session().attribute("userPermission",user.getPermissao().toString());
 
             return user.to_Object(user);
         }
