@@ -5,7 +5,6 @@ import Entities.Filme;
 import Utils.Api;
 import Utils.DB;
 import com.google.gson.JsonObject;
-import com.mysql.cj.mysqlx.protobuf.MysqlxDatatypes;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
