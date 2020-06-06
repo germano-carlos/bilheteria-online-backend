@@ -16,6 +16,10 @@ public class Armchair {
         this.cineId = cineId;
     }
 
+    public Armchair(String id) {
+        this.id = id;
+    }
+
     public String getId() { return this.id; }
     public void setId(String id) { this.id = id;}
     public String getUserId() { return this.userId;}

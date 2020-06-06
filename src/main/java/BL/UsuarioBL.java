@@ -10,7 +10,7 @@ import spark.Response;
 
 public class UsuarioBL {
 
-    public static Usuario loginBL(Request request, Response response) throws Exception {
+    public static JsonObject loginBL(Request request, Response response) throws Exception {
         boolean login = false;
 
         JsonParser jsonParser = new JsonParser();
@@ -28,14 +28,10 @@ public class UsuarioBL {
             request.session(true);
             request.session().attribute("userName",user.getName());
             request.session().attribute("userBirth",user.getBirth());
-            request.session().attribute("userSex",user.getSex());
-            request.session().attribute("userPermission",user.getPermissao());
-            // Create Session
-            // Redirect? another controller, where are our views?
+            request.session().attribute("userSex", user.getSex());
+            request.session().attribute("userPermission",user.getPermissao().toString());
 
-
-
-            return user;
+            return user.to_Object(user);
         }
         else
         {

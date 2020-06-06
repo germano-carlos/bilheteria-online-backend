@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
+import BL.OperadoraBL;
 
 public class TransacaoBL {
     //Adiciona transacao
@@ -16,7 +17,8 @@ public class TransacaoBL {
         JsonObject params = (JsonObject) jsonParser.parse(request.body());
 
         //AdicionaOperadora
-        int operadoraId = addOperadora(params);
+        OperadoraBL.add(request, response);
+        int operadoraId = Integer.parseInt(OperadoraDAO.lastInsertId());
 
         //AdicionaTransacao
         int compradorId = Integer.parseInt(params.get("compradorId").toString().replace("\"",""));
@@ -36,15 +38,12 @@ public class TransacaoBL {
         return transacao;
     }
 
-    //Adiciona Operadora
-    public static int addOperadora(JsonObject params){
-        String nomeCartao = params.get("nomeCartao").toString().replace("\"","");
-        String numeroCartao = params.get("numeroCartao").toString().replace("\"","");
-        String validade = params.get("validade").toString().replace("\"","");
-        String cvv = params.get("cvv").toString().replace("\"","");
-        Operadora operadora = new Operadora(nomeCartao, numeroCartao, validade, cvv);
-        int operadoraId = Integer.parseInt(OperadoraDAO.add(operadora));
+    public static void getTrasacoesByUser(Request request, Response response){
+        JsonParser jsonParser = new JsonParser();
+        JsonObject params = (JsonObject) jsonParser.parse(request.body());
 
-        return operadoraId;
+        int userId = Integer.parseInt(params.get("userId").toString().replace("\"",""));
+        //Retorna objeto com as transacoes
+        //return TransacaoDAO.trasacoesByUser(userId);
     }
 }

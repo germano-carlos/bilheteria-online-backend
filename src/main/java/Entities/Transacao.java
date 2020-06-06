@@ -71,6 +71,10 @@ public class Transacao {
         return compradorId;
     }
 
+    public int getOperadoraId() {
+        return operadoraId;
+    }
+
     public JsonObject to_Object(Transacao transaction)
     {
         Gson gson = new Gson();
