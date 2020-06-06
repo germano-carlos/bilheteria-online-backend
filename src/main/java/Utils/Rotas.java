@@ -27,5 +27,6 @@ public class Rotas {
         put("/updateFilme", (request, response) -> { return FilmeBL.update(request,response); });
         post("/addSessao", (request, response) -> { return SessaoBL.add(request,response); });
         post("/transacao", (request, response) -> { return TransacaoBL.add(request,response); });
+        delete("/deleteFilme", (request, response) -> { return TransacaoBL.add(request,response); });
     }
 }

@@ -43,7 +43,7 @@ public class UsuarioDAO {
                 user.setAdress(rs.getString("adress"));
                 user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
-                user.setPermissao(Permissao.USUARIO);
+                deparaPermission(rs.getString("permission_id"), user);
                 user.setWallet(null);
             }
 
@@ -75,5 +75,17 @@ public class UsuarioDAO {
         } catch (SQLException | ClassNotFoundException e ) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void deparaPermission(String permissionId, Usuario user)
+    {
+        if(permissionId == "1")
+            user.setPermissao(Permissao.FULLACESS);
+        if(permissionId == "2")
+            user.setPermissao(Permissao.CADASTRO);
+        if(permissionId == "3")
+            user.setPermissao(Permissao.FINANCEIRO);
+        if(permissionId == "4")
+            user.setPermissao(Permissao.USUARIO);
     }
 }
