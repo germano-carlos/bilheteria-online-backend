@@ -6,8 +6,8 @@ public class DB {
 
     public  DB() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String BD_URL = "jdbc:mysql://localhost:3306/bilheteria-digital?useTimezone=true&serverTimezone=UTC";
-        this.con=DriverManager.getConnection(BD_URL,"root","root");
+        String BD_URL = "jdbc:mysql://br194.hostgator.com.br?useTimezone=true&serverTimezone=UTC";
+        this.con=DriverManager.getConnection(BD_URL,"alinkdig_aeds2","123456");
     }
 
     public void __call(String method){
