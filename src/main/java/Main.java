@@ -1,10 +1,6 @@
-import BL.CinemaBL;
-import Entities.Cinema;
 import Utils.Rotas;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import static spark.Spark.init;
+import static spark.Spark.*;
 
 public class Main {
 
@@ -12,6 +8,15 @@ public class Main {
         init();
         Cors cors = new Cors();
         Rotas routes = new Rotas();
+        port(getHerokuAssignedPort());
+        get("/", (req, res) -> "Bilheteria online");
+    }
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567;
     }
 }
 
