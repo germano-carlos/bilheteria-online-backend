@@ -24,8 +24,8 @@ public class FilmeBL {
 
     public static JsonObject add(Request req, Response res) throws Exception {
         //Recupera a permissao do usuário da sessão
-        /*if(req.session().attribute("userPermission") == Permissao.FULLACESS)
-        {*/
+        if(req.session().attribute("userPermission") == Permissao.FULLACESS.toString())
+        {
             JsonParser jsonParser = new JsonParser();
             JsonObject params = (JsonObject) jsonParser.parse(req.body());
 
@@ -49,9 +49,9 @@ public class FilmeBL {
 
             res.status(201);
             return movie.to_Object(movie);
-        //}
+        }
 
-//        return null;
+        return null;
     }
 
     private static List<Categoria> compareClass(String moviesCategories)
