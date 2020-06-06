@@ -14,22 +14,22 @@ import java.util.*;
 
 public class SessaoBL {
 
-    public static JsonObject add(Request request, Response response)
-    {
+    public static JsonObject add(Request request, Response response) throws SQLException, ClassNotFoundException {
         JsonParser jsonParser = new JsonParser();
         JsonObject params = (JsonObject) jsonParser.parse(request.body());
 
-        String usuarioId = params.get("userId").toString();
-        String movieId = params.get("movieId").toString();
-        String cineId = params.get("cineId").toString();
+        String usuarioId = params.get("userId").toString().replace("\"","");;
+        String movieId = params.get("movieId").toString().replace("\"","");;
+        String cineId = params.get("cineId").toString().replace("\"","");;
+        String date = params.get("date").toString().replace("\"","");;
 
-        if(!SessaoDAO.checkSession(movieId,cineId))
+        if(SessaoDAO.checkSession(movieId,cineId, date))
         {
-            Sessao session = SessaoDAO.add(movieId,cineId);
+            Sessao session = SessaoDAO.add(movieId,cineId,date);
             return  session.to_Object(session);
         }
 
-        Sessao session = SessaoDAO.getByParams(movieId,cineId);
+        Sessao session = SessaoDAO.getByParams(movieId,cineId,date);
         return session.to_Object(session);
     }
 
