@@ -98,4 +98,15 @@ public class FilmeBL {
 
         return newFilme.to_Object(newFilme);
     }
+
+    public static boolean delete(Request req, Response res) throws Exception
+    {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject params = (JsonObject) jsonParser.parse(req.body());
+
+        int id = params.get("id").getAsInt();
+        FilmeDAO.delete(id);
+
+        return true;
+    }
 }

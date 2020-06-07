@@ -35,7 +35,7 @@ public class Filme {
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id;}
     public String getPoster() { return this.poster; }
-    public void setId(String poster) { this.poster = poster;}
+    public void setPoster(String poster) { this.poster = poster;}
     public String getName() { return this.name;}
     public void setName(String name) { this.name = name;}
     public String getSynopsis() { return this.synopsis;}

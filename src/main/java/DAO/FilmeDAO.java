@@ -151,4 +151,35 @@ public class FilmeDAO {
 
         return  movie;
     }
+
+    public static Filme getById(int movieId) throws SQLException, ClassNotFoundException {
+        Filme movie = new Filme();
+
+        //Inicializo Conexão
+        DB Connection = new DB();
+        //Realiza consulta
+        Statement stmt = Connection.getConnection().createStatement();
+        String sql = "SELECT * FROM movie where id = " + movieId;
+
+        ResultSet rs=stmt.executeQuery(sql);
+        if(rs != null && rs.next()) {
+            movie.setName(rs.getString("name"));
+            movie.setPoster(rs.getString("poster"));
+        }
+
+        return  movie;
+    }
+
+    public static void delete(int movieId) throws SQLException, ClassNotFoundException {
+        Filme movie = new Filme();
+
+        //Inicializo Conexão
+        DB Connection = new DB();
+        //Realiza consulta
+        String sql = "delete FROM movie where id = " + movieId;
+        PreparedStatement stmt = Connection.getConnection().prepareStatement(sql);
+        stmt.execute();
+
+        Connection.closeConnection();
+    }
 }
