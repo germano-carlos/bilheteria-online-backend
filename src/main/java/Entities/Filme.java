@@ -31,6 +31,17 @@ public class Filme {
     public Filme() {
 
     }
+    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster, int id)
+    {
+        this.name = name;
+        this.synopsis = synopsis;
+        this.releaseData = releaseData;
+        this.finalDate = finalDate;
+        this.cineList  = cineList;
+        this.categoryList = categorylist;
+        this.poster = poster;
+        this.id = id;
+    }
 
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id;}

@@ -4,6 +4,7 @@ import Entities.Cinema;
 import Entities.Filme;
 import Utils.Api;
 import Utils.DB;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.sql.PreparedStatement;
@@ -22,10 +23,29 @@ public class FilmeDAO {
         return moviesList;
     }
 
-    public static List<Filme> getAllMoviesEnabledDAO()
-    {
+    public static List<Filme> getAllMoviesEnabledDAO() throws SQLException, ClassNotFoundException {
         List<Filme> moviesList = new ArrayList<Filme>();
         //Criar chamada GET
+
+        //Inicializo Conexão
+        DB Connection = new DB();
+        //Realiza consulta
+        Statement stmt = Connection.getConnection().createStatement();
+        String sql = "SELECT * FROM movie m " +
+                " join cine_movie cm on cm.movie_id = m.id " +
+                " where now() between release_data and final_date ";
+
+        ResultSet rs=stmt.executeQuery(sql);
+        while(rs != null && rs.next()) {
+            moviesList.add(new Filme(rs.getString("name"),
+                                     rs.getString("synopsis"),
+                                     rs.getString("release_data"),
+                                     rs.getString("final_date"),
+                                    null,
+                                    null,
+                                     rs.getString("poster"),
+                                     rs.getInt("id")));
+        }
 
         return moviesList;
     }
@@ -147,6 +167,7 @@ public class FilmeDAO {
             movie.setReleaseData(rs.getString("release_data"));
             movie.setName(rs.getString("name"));
             movie.setId(rs.getInt("id"));
+            movie.setPoster("poster");
         }
 
         return  movie;

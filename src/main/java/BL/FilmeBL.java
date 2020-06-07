@@ -5,22 +5,30 @@ import Entities.Cinema;
 import Entities.Filme;
 import Enums.Categoria;
 import Enums.Permissao;
-import com.google.gson.JsonElement;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FilmeBL {
 
+
     public List<Filme> getMoviesByNameBL()
     {
         return FilmeDAO.getMoviesByNameDAO();
     }
-    public List<Filme> getAllMoviesEnabledBL(){ return FilmeDAO.getAllMoviesEnabledDAO();}
+    public static String getAllMoviesEnabledBL(Request req, Response res) throws SQLException, ClassNotFoundException
+    {
+
+        String Json = new Gson().toJson(FilmeDAO.getAllMoviesEnabledDAO());
+
+        return Json;
+    }
 
     public static JsonObject add(Request req, Response res) throws Exception {
         //Recupera a permissao do usuário da sessão
