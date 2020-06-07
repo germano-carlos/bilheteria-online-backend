@@ -31,20 +31,21 @@ public class FilmeBL {
 
             JsonObject dados = FilmeDAO.getFilmeByParams(params.get("title").toString(),params.get("year").toString());
 
-            if(dados.has("Error") || dados == null)
+            if(dados.has("Error"))
             {
                 throw new Exception("Movie not found, please try again");
             }
 
             String name = dados.get("Title").toString().replace("\"","");
             String synopsis = dados.get("Plot").toString().replace("\"","");
+            String poster = dados.get("Poster").toString().replace("\"","");
             String releaseData = params.get("releaseData").toString().replace("\"","");
             String finalDate = params.get("finalDate").toString().replace("\"","");
             List<Cinema> cineList = new ArrayList<Cinema>();
             cineList.add(CinemaBL.getById(params.get("cinemaId").toString().replace("\"","")));
             List<Categoria> categorylist = compareClass(dados.get("Genre").toString());
 
-            Filme movie = new Filme(name,synopsis,releaseData,finalDate,cineList,categorylist);
+            Filme movie = new Filme(name,synopsis,releaseData,finalDate,cineList,categorylist, poster);
             FilmeDAO.add(movie);
 
             res.status(201);

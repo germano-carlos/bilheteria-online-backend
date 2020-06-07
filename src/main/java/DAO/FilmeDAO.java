@@ -45,10 +45,11 @@ public class FilmeDAO {
         try{
             DB connection = new DB();
             //Inserindo um filme na tabela movie
-            String sql = "INSERT INTO movie (name, synopsis) VALUES (?, ?)";
+            String sql = "INSERT INTO movie (name, synopsis) VALUES (?, ?, ?)";
             PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
             stmt.setString(1, movie.getName());
             stmt.setString(2, movie.getSynopsis());
+            stmt.setString(3, movie.getPoster());
             stmt.execute();
 
             //Buscando o id do Filme Inserido

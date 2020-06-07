@@ -14,9 +14,10 @@ public class Filme {
     private List<Cinema> cineList;
     private String releaseData;
     private String finalDate;
+    private String poster;
     private List<Categoria> categoryList;
 
-    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist)
+    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster)
     {
         this.name = name;
         this.synopsis = synopsis;
@@ -24,6 +25,7 @@ public class Filme {
         this.finalDate = finalDate;
         this.cineList  = cineList;
         this.categoryList = categorylist;
+        this.poster = poster;
     }
 
     public Filme() {
@@ -32,6 +34,8 @@ public class Filme {
 
     public int getId() { return this.id; }
     public void setId(int id) { this.id = id;}
+    public String getPoster() { return this.poster; }
+    public void setId(String poster) { this.poster = poster;}
     public String getName() { return this.name;}
     public void setName(String name) { this.name = name;}
     public String getSynopsis() { return this.synopsis;}
