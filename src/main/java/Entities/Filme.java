@@ -17,8 +17,9 @@ public class Filme {
     private String poster;
     private List<Categoria> categoryList;
     private boolean carousel;
+    private String runtime;
 
-    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster)
+    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster, String runtime)
     {
         this.name = name;
         this.synopsis = synopsis;
@@ -27,6 +28,7 @@ public class Filme {
         this.cineList  = cineList;
         this.categoryList = categorylist;
         this.poster = poster;
+        this.runtime = runtime;
     }
 
     public Filme() {
@@ -49,6 +51,8 @@ public class Filme {
     public void setId(int id) { this.id = id;}
     public String getPoster() { return this.poster; }
     public void setPoster(String poster) { this.poster = poster;}
+    public String getRuntime() { return this.runtime; }
+    public void setRuntime(String runtime) { this.runtime = runtime;}
     public String getName() { return this.name;}
     public void setName(String name) { this.name = name;}
     public String getSynopsis() { return this.synopsis;}

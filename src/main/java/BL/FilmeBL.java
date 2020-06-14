@@ -58,13 +58,14 @@ public class FilmeBL {
             String name = dados.get("Title").toString().replace("\"","");
             String synopsis = dados.get("Plot").toString().replace("\"","");
             String poster = dados.get("Poster").toString().replace("\"","");
+            String runtime = dados.get("Runtime").toString().replace("\"","");
             String releaseData = params.get("releaseData").toString().replace("\"","");
             String finalDate = params.get("finalDate").toString().replace("\"","");
             List<Cinema> cineList = new ArrayList<Cinema>();
             cineList.add(CinemaBL.getById(req.session().attribute("cineId")));
             List<Categoria> categorylist = compareClass(dados.get("Genre").toString());
 
-            Filme movie = new Filme(name,synopsis,releaseData,finalDate,cineList,categorylist, poster);
+            Filme movie = new Filme(name,synopsis,releaseData,finalDate,cineList,categorylist, poster, runtime);
             FilmeDAO.add(movie);
 
             res.status(201);
