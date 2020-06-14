@@ -1,6 +1,7 @@
 package BL;
 
 import DAO.UsuarioDAO;
+import Entities.Cinema;
 import Entities.Usuario;
 
 import com.google.gson.JsonObject;
@@ -30,6 +31,7 @@ public class UsuarioBL {
             request.session().attribute("userBirth",user.getBirth());
             request.session().attribute("userSex", user.getSex());
             request.session().attribute("userPermission",user.getPermissao().toString());
+            request.session().attribute("cineId", CinemaBL.getByUserId(user.getCpf()));
 
             return user.to_Object(user);
         }

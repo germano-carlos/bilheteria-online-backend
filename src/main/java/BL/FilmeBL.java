@@ -3,11 +3,13 @@ package BL;
 import DAO.FilmeDAO;
 import Entities.Cinema;
 import Entities.Filme;
+import Entities.Usuario;
 import Enums.Categoria;
 import Enums.Permissao;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.json.simple.JSONObject;
 import spark.Request;
 import spark.Response;
 
@@ -31,6 +33,9 @@ public class FilmeBL {
     }
 
     public static JsonObject add(Request req, Response res) throws Exception {
+
+        JsonObject user = UsuarioBL.loginBL(req, res);
+
         //Recupera a permissao do usuário da sessão
         if(req.session().attribute("userPermission") == Permissao.FULLACESS.toString())
         {
@@ -50,7 +55,7 @@ public class FilmeBL {
             String releaseData = params.get("releaseData").toString().replace("\"","");
             String finalDate = params.get("finalDate").toString().replace("\"","");
             List<Cinema> cineList = new ArrayList<Cinema>();
-            cineList.add(CinemaBL.getById(params.get("cinemaId").toString().replace("\"","")));
+            cineList.add(CinemaBL.getById(req.session().attribute("cineId")));
             List<Categoria> categorylist = compareClass(dados.get("Genre").toString());
 
             Filme movie = new Filme(name,synopsis,releaseData,finalDate,cineList,categorylist, poster);

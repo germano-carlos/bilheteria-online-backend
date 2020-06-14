@@ -48,4 +48,23 @@ public class CinemaDAO {
 
         return cine;
     }
+
+    public static String getByUserId(String cpf) throws SQLException, ClassNotFoundException {
+        String cineId = "";
+
+        //Inicializo Conexão
+        DB Connection = new DB();
+        //Realiza consulta
+        Statement stmt = Connection.getConnection().createStatement();
+        String sql = "select cine_id from permission_user where user_id='"+cpf+"' and permission_id = '1'";
+        ResultSet rs=stmt.executeQuery(sql);
+        if(rs != null && rs.next()) {
+            cineId = rs.getString("cine_id");
+        }
+
+        //Finaliza a conexão
+        Connection.closeConnection();
+
+        return cineId;
+    }
 }

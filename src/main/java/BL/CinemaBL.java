@@ -26,4 +26,9 @@ public class CinemaBL {
     public static Cinema getById(String cineId) throws SQLException, ClassNotFoundException {
         return CinemaDAO.getById(cineId);
     }
+
+    public static String getByUserId(String cpf) throws SQLException, ClassNotFoundException {
+        return CinemaDAO.getByUserId(cpf);
+    }
+
 }

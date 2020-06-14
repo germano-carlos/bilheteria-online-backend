@@ -22,7 +22,7 @@ public class Cors {
 
         before((request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
-            response.header("Access-Control-Request-Method", "POST");
+            response.header("Access-Control-Request-Method", "*");
 
             // Note: this may or may not be necessary in your particular application
             response.type("application/json");
