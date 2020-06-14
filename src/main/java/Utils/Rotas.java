@@ -1,18 +1,9 @@
 package Utils;
 
-import BL.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import spark.Filter;
-import spark.Spark;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import BL.FilmeBL;
+import BL.SessaoBL;
+import BL.TransacaoBL;
+import BL.UsuarioBL;
 
 import static spark.Spark.*;
 
@@ -28,6 +19,6 @@ public class Rotas {
         post("/addSessao", (request, response) -> { return SessaoBL.add(request,response); });
         post("/transacao", (request, response) -> { return TransacaoBL.add(request,response); });
         delete("/deleteFilme", (request, response) -> { return FilmeBL.delete(request,response); });
-        post("/getAllMovies", (request, response) -> { return FilmeBL.getAllMoviesEnabledBL(request,response); });
+        get("/getAllMovies", (request, response) -> { return FilmeBL.getAllMoviesEnabledBL(request,response); });
     }
 }

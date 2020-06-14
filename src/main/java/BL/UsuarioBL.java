@@ -41,7 +41,7 @@ public class UsuarioBL {
     }
 
     //Adiciona usuario
-    public static Usuario add(Request request, Response response){
+    public static JsonObject add(Request request, Response response){
         JsonParser jsonParser = new JsonParser();
         JsonObject params = (JsonObject) jsonParser.parse(request.body());
 
@@ -59,7 +59,7 @@ public class UsuarioBL {
 
         response.status(201);
 
-        return usuario;
+        return usuario.to_Object(usuario);
     }
 
 }
