@@ -100,6 +100,12 @@ public class FilmeBL {
                 case "Horror":
                     categoriaList.add(Categoria.TERROR);
                     break;
+                case "Romance":
+                    categoriaList.add(Categoria.ROMANCE);
+                    break;
+                case "Musical":
+                    categoriaList.add(Categoria.MUSICAL);
+                    break;
             }
 
         }
