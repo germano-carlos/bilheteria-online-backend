@@ -210,7 +210,7 @@ public class FilmeDAO {
             movie.setName(rs.getString("name"));
             movie.setPoster(rs.getString("poster"));
             movie.setId(movieId);
-            movie.setSynopsis("synopsis");
+            movie.setSynopsis(rs.getString("synopsis"));
         }
 
         List<Categoria> categoryList = new ArrayList<Categoria>();
