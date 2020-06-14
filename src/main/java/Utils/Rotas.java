@@ -20,5 +20,6 @@ public class Rotas {
         post("/transacao", (request, response) -> { return TransacaoBL.add(request,response); });
         delete("/deleteFilme", (request, response) -> { return FilmeBL.delete(request,response); });
         get("/getAllMovies", (request, response) -> { return FilmeBL.getAllMoviesEnabledBL(request,response); });
+        get("/filmebyId/:id", (request, response) -> { return FilmeBL.getMovieById(request,response); });
     }
 }

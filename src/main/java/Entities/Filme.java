@@ -16,6 +16,7 @@ public class Filme {
     private String finalDate;
     private String poster;
     private List<Categoria> categoryList;
+    private boolean carousel;
 
     public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster)
     {
@@ -31,7 +32,7 @@ public class Filme {
     public Filme() {
 
     }
-    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster, int id)
+    public Filme(String name,String synopsis,String releaseData,String finalDate,List<Cinema> cineList,List<Categoria> categorylist, String poster, int id, String carousel)
     {
         this.name = name;
         this.synopsis = synopsis;
@@ -41,6 +42,7 @@ public class Filme {
         this.categoryList = categorylist;
         this.poster = poster;
         this.id = id;
+        this.carousel = carousel.equals("S")  ? true : false;
     }
 
     public int getId() { return this.id; }

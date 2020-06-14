@@ -26,10 +26,16 @@ public class FilmeBL {
     }
     public static String getAllMoviesEnabledBL(Request req, Response res) throws SQLException, ClassNotFoundException
     {
+        return new Gson().toJson(FilmeDAO.getAllMoviesEnabledDAO());
+    }
 
-        String Json = new Gson().toJson(FilmeDAO.getAllMoviesEnabledDAO());
+    public static JsonObject getMovieById(Request req, Response res) throws SQLException, ClassNotFoundException
+    {
+        String id = req.params(":id");
 
-        return Json;
+        Filme movie = FilmeDAO.getById(Integer.parseInt(id));
+
+        return movie.to_Object(movie);
     }
 
     public static JsonObject add(Request req, Response res) throws Exception {

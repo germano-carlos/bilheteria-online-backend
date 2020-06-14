@@ -44,7 +44,8 @@ public class FilmeDAO {
                                     null,
                                     null,
                                      rs.getString("poster"),
-                                     rs.getInt("id")));
+                                     rs.getInt("id"),
+                                     rs.getString("carousel")));
         }
 
         return moviesList;
@@ -186,6 +187,8 @@ public class FilmeDAO {
         if(rs != null && rs.next()) {
             movie.setName(rs.getString("name"));
             movie.setPoster(rs.getString("poster"));
+            movie.setId(movieId);
+            movie.setSynopsis("synopsis");
         }
 
         return  movie;
