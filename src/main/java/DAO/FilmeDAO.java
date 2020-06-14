@@ -2,6 +2,7 @@ package DAO;
 
 import Entities.Cinema;
 import Entities.Filme;
+import Enums.Categoria;
 import Utils.Api;
 import Utils.DB;
 import com.google.gson.Gson;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FilmeDAO {
     public static List<Filme> getMoviesByNameDAO()
@@ -25,7 +27,6 @@ public class FilmeDAO {
 
     public static List<Filme> getAllMoviesEnabledDAO() throws SQLException, ClassNotFoundException {
         List<Filme> moviesList = new ArrayList<Filme>();
-        //Criar chamada GET
 
         //Inicializo Conexão
         DB Connection = new DB();
@@ -42,12 +43,33 @@ public class FilmeDAO {
                                      rs.getString("release_data"),
                                      rs.getString("final_date"),
                                     null,
-                                    null,
+                                 null,
                                      rs.getString("poster"),
                                      rs.getInt("id"),
                                      rs.getString("carousel")));
         }
 
+
+        //Adiciona a categoria a cada um dos filmes da lista
+        for(int i =0; i< moviesList.size(); i++)
+        {
+            List<Categoria> categoryList = new ArrayList<Categoria>();
+            int id = moviesList.get(i).getId();
+            Statement stmt2 = Connection.getConnection().createStatement();
+            String sql2 = "SELECT distinct * FROM category c " +
+                            "join movie_category mc on mc.category_id = c.id " +
+                            "where movie_id ='" + moviesList.get(i).getId() + "'";
+            ResultSet rs2=stmt.executeQuery(sql2);
+
+            while(rs2.next())
+            {
+                categoryList.add(compareClassBD(rs2.getString("category_id")));
+            }
+
+            moviesList.get(i).setCategoryList(categoryList);
+        }
+
+        Connection.closeConnection();
         return moviesList;
     }
 
@@ -191,6 +213,23 @@ public class FilmeDAO {
             movie.setSynopsis("synopsis");
         }
 
+        List<Categoria> categoryList = new ArrayList<Categoria>();
+        int id = movieId;
+        Statement stmt2 = Connection.getConnection().createStatement();
+        String sql2 = "SELECT distinct * FROM category c " +
+                "join movie_category mc on mc.category_id = c.id " +
+                "where movie_id ='" + movieId + "'";
+        ResultSet rs2=stmt.executeQuery(sql2);
+
+        while(rs2.next())
+        {
+            categoryList.add(compareClassBD(rs2.getString("category_id")));
+        }
+
+        movie.setCategoryList(categoryList);
+
+
+
         return  movie;
     }
 
@@ -205,5 +244,36 @@ public class FilmeDAO {
         stmt.execute();
 
         Connection.closeConnection();
+    }
+
+    public static Categoria compareClassBD(String categoryId)
+    {
+        if(categoryId.equals("1"))
+            return Categoria.ACAO;
+        if(categoryId.equals("2"))
+            return Categoria.ANIMACAO;
+        if(categoryId.equals("3"))
+            return Categoria.AVENTURA;
+        if(categoryId.equals("4"))
+            return Categoria.COMEDIA;
+        if(categoryId.equals("5"))
+            return Categoria.DOCUMENTARIO;
+        if(categoryId.equals("6"))
+            return Categoria.FANTASIA;
+        if(categoryId.equals("7"))
+            return Categoria.FAROESTE;
+        if(categoryId.equals("8"))
+            return Categoria.FICCAO;
+        if(categoryId.equals("9"))
+            return Categoria.GUERRA;
+        if(categoryId.equals("10"))
+            return Categoria.MUSICAL;
+        if(categoryId.equals("11"))
+            return Categoria.ROMANCE;
+        if(categoryId.equals("12"))
+            return Categoria.SUSPENSE;
+
+        return Categoria.TERROR;
+
     }
 }
