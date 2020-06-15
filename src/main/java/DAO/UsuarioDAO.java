@@ -93,4 +93,27 @@ public class UsuarioDAO {
         if(permissionId.equals("4"))
             user.setPermissao(Permissao.USUARIO);
     }
+    public static Usuario getByCPF(String CPF) throws SQLException, ClassNotFoundException {
+        Usuario user = new Usuario();
+        //Inicializo Conexão
+        DB Connection = new DB();
+        //Realiza consulta
+        Statement stmt = Connection.getConnection().createStatement();
+        String sql = "select * from user where cpf='"+CPF+"'";
+        ResultSet rs=stmt.executeQuery(sql);
+        if(rs != null && rs.next()) {
+            //Instancia atributos do Usuário que está logando
+            user.setCpf(rs.getString("cpf"));
+            user.setAdress(rs.getString("adress"));
+            user.setName(rs.getString("name"));
+            user.setSex(rs.getString("sex").charAt(0));
+            user.setBirth(rs.getString("birth"));
+            user.setPassword(rs.getString("password"));
+        }
+
+        //Finaliza a conexão
+        Connection.closeConnection();
+
+        return user;
+    }
 }

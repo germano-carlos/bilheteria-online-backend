@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.List;
+
 public class Transacao {
     private String compradorId;
     private int sessaoId;
@@ -12,6 +14,8 @@ public class Transacao {
     private double valorTotal;
     private int operadoraId;
     private boolean aprovado;
+    private String nomePagador;
+    private List<Armchair> cadeirascompradas;
 
     public Transacao(String compradorId, int sessaoId, int qtIngressos, double valorIngresso, double valorTotal, int operadoraId, boolean aprovado) {
         this.compradorId = compradorId;
@@ -69,6 +73,22 @@ public class Transacao {
 
     public String getCompradorId() {
         return compradorId;
+    }
+
+    public void setChairs(List<Armchair> cadeirascompradas) {
+        this.cadeirascompradas = cadeirascompradas;
+    }
+
+    public List<Armchair> getChairs() {
+        return this.cadeirascompradas;
+    }
+
+    public void setPagador(String nomePagador) {
+        this.nomePagador = nomePagador;
+    }
+
+    public String getPagador() {
+        return this.nomePagador;
     }
 
     public int getOperadoraId() {

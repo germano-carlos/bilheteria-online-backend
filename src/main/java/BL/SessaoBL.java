@@ -42,4 +42,8 @@ public class SessaoBL {
 
         return SessaoDAO.getArmChairFree(sessionId);
     }
+
+    public static void addUserInSession(String compradorId, String[] chairs, int sessaoId) throws SQLException, ClassNotFoundException {
+        SessaoDAO.addUserInSession(compradorId,chairs, sessaoId);
+    }
 }

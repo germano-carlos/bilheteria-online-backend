@@ -21,7 +21,9 @@ public class Armchair {
     public Armchair(String id, String position) {
         this.id = id; this.position = position;
     }
-
+    public Armchair(String id) {
+        this.id = id;
+    }
     public String getId() { return this.id; }
     public void setId(String id) { this.id = id;}
     public String getUserId() { return this.userId;}

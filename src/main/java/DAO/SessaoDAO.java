@@ -123,4 +123,18 @@ public class SessaoDAO {
 
         return s;
     }
+
+    public static void addUserInSession(String compradorId, String[] chairs, int sessaoId) throws SQLException, ClassNotFoundException {
+        DB connection = new DB();
+        for(int i=0; i< chairs.length; i++)
+        {
+            String sql = "INSERT INTO session_user_armchair (session_id, armchair_id, user_id) VALUES (?, ?, ?)";
+            PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+            stmt.setString(1, Integer.toString(sessaoId));
+            stmt.setString(2, chairs[i]);
+            stmt.setString(3, compradorId);
+            stmt.execute();
+        }
+        connection.closeConnection();
+    }
 }

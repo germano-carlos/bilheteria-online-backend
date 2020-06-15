@@ -2,17 +2,23 @@ package BL;
 
 import DAO.OperadoraDAO;
 import DAO.TransacaoDAO;
+import Entities.Armchair;
 import Entities.Operadora;
 import Entities.Transacao;
+import Entities.Usuario;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 import BL.OperadoraBL;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TransacaoBL {
     //Adiciona transacao
-    public static JsonObject add(Request request, Response response){
+    public static JsonObject add(Request request, Response response) throws SQLException, ClassNotFoundException {
         JsonParser jsonParser = new JsonParser();
         JsonObject params = (JsonObject) jsonParser.parse(request.body());
 
@@ -30,9 +36,21 @@ public class TransacaoBL {
 
 
         Transacao transacao = new Transacao(compradorId, sessaoId, qtIngressos, valorIngresso, valorTotal, operadoraId, aprovado);
-
         TransacaoDAO.add(transacao);
 
+        String[] chairs = params.get("chairs").toString().replace("\"","").split(",");
+        SessaoBL.addUserInSession(compradorId,chairs,sessaoId);
+
+        Usuario user = UsuarioBL.getByCPF(compradorId);
+        transacao.setPagador(user.getName());
+
+        List<Armchair> cadeiras = new ArrayList<Armchair>();
+        for(int i=0; i< chairs.length; i++)
+        {
+            cadeiras.add(new Armchair(chairs[i]));
+        }
+
+        transacao.setChairs(cadeiras);
         response.status(201);
 
         return transacao.to_Object(transacao);

@@ -9,6 +9,8 @@ import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 
+import java.sql.SQLException;
+
 public class UsuarioBL {
 
     public static JsonObject loginBL(Request request, Response response) throws Exception {
@@ -62,6 +64,10 @@ public class UsuarioBL {
         response.status(201);
 
         return usuario.to_Object(usuario);
+    }
+
+    public static Usuario getByCPF(String cpf) throws SQLException, ClassNotFoundException {
+        return UsuarioDAO.getByCPF(cpf);
     }
 
 }
