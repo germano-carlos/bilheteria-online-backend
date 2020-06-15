@@ -27,7 +27,7 @@ public class TransacaoBL {
         int operadoraId = Integer.parseInt(OperadoraDAO.lastInsertId());
 
         //AdicionaTransacao
-        String compradorId = params.get("user_id").toString().replace("\"","");
+        String compradorId = params.get("userId").toString().replace("\"","");
         int sessaoId = Integer.parseInt(params.get("sessaoId").toString().replace("\"",""));
         int qtIngressos = Integer.parseInt(params.get("qtIngressos").toString().replace("\"",""));
         double valorIngresso = Double.parseDouble(params.get("valorIngresso").toString().replace("\"",""));
