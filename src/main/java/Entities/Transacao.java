@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class Transacao {
-    private int compradorId;
+    private String compradorId;
     private int sessaoId;
     private int qtIngressos;
     private double valorIngresso;
@@ -13,7 +13,7 @@ public class Transacao {
     private int operadoraId;
     private boolean aprovado;
 
-    public Transacao(int compradorId, int sessaoId, int qtIngressos, double valorIngresso, double valorTotal, int operadoraId, boolean aprovado) {
+    public Transacao(String compradorId, int sessaoId, int qtIngressos, double valorIngresso, double valorTotal, int operadoraId, boolean aprovado) {
         this.compradorId = compradorId;
         this.sessaoId = sessaoId;
         this.qtIngressos = qtIngressos;
@@ -23,7 +23,7 @@ public class Transacao {
         this.aprovado = aprovado;
     }
 
-    public void setCompradorId(int compradorId) {
+    public void setCompradorId(String compradorId) {
         this.compradorId = compradorId;
     }
 
@@ -67,7 +67,7 @@ public class Transacao {
         return aprovado;
     }
 
-    public int getCompradorId() {
+    public String getCompradorId() {
         return compradorId;
     }
 

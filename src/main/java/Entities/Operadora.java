@@ -18,6 +18,7 @@ public class Operadora {
         this.cardNumber = cardNumber;
         this.cvv = cvv;
         this.expirationDate = expirationDate;
+        this.situacaoCartao = SituacaoCartao.ATIVO;
     }
 
     public int getId() { return this.id; }

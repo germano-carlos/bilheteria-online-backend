@@ -12,7 +12,7 @@ import BL.OperadoraBL;
 
 public class TransacaoBL {
     //Adiciona transacao
-    public static Transacao add(Request request, Response response){
+    public static JsonObject add(Request request, Response response){
         JsonParser jsonParser = new JsonParser();
         JsonObject params = (JsonObject) jsonParser.parse(request.body());
 
@@ -21,7 +21,7 @@ public class TransacaoBL {
         int operadoraId = Integer.parseInt(OperadoraDAO.lastInsertId());
 
         //AdicionaTransacao
-        int compradorId = Integer.parseInt(params.get("compradorId").toString().replace("\"",""));
+        String compradorId = params.get("user_id").toString().replace("\"","");
         int sessaoId = Integer.parseInt(params.get("sessaoId").toString().replace("\"",""));
         int qtIngressos = Integer.parseInt(params.get("qtIngressos").toString().replace("\"",""));
         double valorIngresso = Double.parseDouble(params.get("valorIngresso").toString().replace("\"",""));
@@ -35,7 +35,7 @@ public class TransacaoBL {
 
         response.status(201);
 
-        return transacao;
+        return transacao.to_Object(transacao);
     }
 
     public static void getTrasacoesByUser(Request request, Response response){

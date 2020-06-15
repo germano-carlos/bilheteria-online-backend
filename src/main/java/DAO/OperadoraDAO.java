@@ -19,7 +19,7 @@ public class OperadoraDAO {
             stmt.setString(2, operadora.getCardNumber());
             stmt.setString(3, operadora.getCvv());
             stmt.setString(4, operadora.getExpirationDate());
-            stmt.setString(4, "Valido");
+            stmt.setString(5, "1");
             stmt.execute();
 
             stmt.close();
@@ -30,7 +30,7 @@ public class OperadoraDAO {
     }
 
     public static String lastInsertId(){
-        String sql = "SELECT MAX(id) as id FROM movie";
+        String sql = "SELECT MAX(id) as id FROM operator";
         String operadoraId = "";
         try{
             DB connection = new DB();
