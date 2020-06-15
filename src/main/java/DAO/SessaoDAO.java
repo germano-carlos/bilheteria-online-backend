@@ -66,7 +66,7 @@ public class SessaoDAO {
             ResultSet rs=stmt.executeQuery(sql);
 
             while ( rs.next() ) {
-                armchairs.add(new Armchair(rs.getString("id")));
+                armchairs.add(new Armchair(rs.getString("id"), rs.getString("position")));
             }
 
             return armchairs;

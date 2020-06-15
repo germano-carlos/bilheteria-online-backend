@@ -9,15 +9,17 @@ public class Armchair {
     private String userId;
     private String cineId;
     private String movieId;
+    private String position;
 
-    public Armchair(String armchair_id, String userId, String cineId) {
+    public Armchair(String armchair_id, String userId, String cineId, String position) {
         this.id = armchair_id;
         this.userId = userId;
         this.cineId = cineId;
+        this.position = position;
     }
 
-    public Armchair(String id) {
-        this.id = id;
+    public Armchair(String id, String position) {
+        this.id = id; this.position = position;
     }
 
     public String getId() { return this.id; }
