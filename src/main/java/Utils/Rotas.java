@@ -19,7 +19,8 @@ public class Rotas {
         post("/addSessao", (request, response) -> { return SessaoBL.add(request,response); });
         post("/transacao", (request, response) -> { return TransacaoBL.add(request,response); });
         post("/addManualTransaction", (request, response) -> { return TransacaoBL.addTransacaoManual(request,response); });
-        post("/countTransacoes", (request, response) -> { return TransacaoBL.getCountTransacoes(request,response); });
+        get("/countTransacoes/:method/:filter", (request, response) -> { return TransacaoBL.getCountTransacoes(request,response); });
+        get("/totalBySession/", (request, response) -> { return TransacaoBL.getTotalBySession(request,response); });
         delete("/deleteFilme", (request, response) -> { return FilmeBL.delete(request,response); });
         get("/getAllMovies", (request, response) -> { return FilmeBL.getAllMoviesEnabledBL(request,response); });
         get("/filmebyId/:id", (request, response) -> { return FilmeBL.getMovieById(request,response); });

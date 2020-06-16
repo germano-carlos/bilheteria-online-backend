@@ -11,6 +11,8 @@ import com.google.gson.JsonParser;
 import spark.Request;
 import spark.Response;
 import BL.OperadoraBL;
+import DAO.FilmeDAO;
+import com.google.gson.Gson;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -73,12 +75,15 @@ public class TransacaoBL {
     }
 
     public static String getCountTransacoes(Request request, Response response) {
-        JsonParser jsonParser = new JsonParser();
-        JsonObject params = (JsonObject) jsonParser.parse(request.body());
-        String method = params.get("metodo").toString().replace("\"", "");
+        String method = request.params(":method");
+        String filter = request.params(":filter");
 
         //Retorna objeto com as transacoes
-        return TransacaoDAO.countTransacoes(method);
+        return TransacaoDAO.countTransacoes(method, filter);
+    }
+
+    public static String getTotalBySession(Request request, Response response) {
+        return new Gson().toJson(TransacaoDAO.getTotalBySession());
     }
 
     public static String addTransacaoManual(Request request, Response response) {

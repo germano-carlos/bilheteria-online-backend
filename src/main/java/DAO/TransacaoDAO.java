@@ -1,5 +1,6 @@
 package DAO;
 
+import Entities.DadosGrafico;
 import Entities.Transacao;
 import Utils.DB;
 
@@ -7,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -59,20 +62,27 @@ public class TransacaoDAO {
         }
     }
 
-    public static String countTransacoes(String method) {
+    public static String countTransacoes(String method, String filter) {
         try {
             DB connection = new DB();
 
             String querySuffix = "";
 
-            if (method.equals("site")) {
+            if (filter.equals("site")) {
                 querySuffix = "WHERE user_id != 9999";
-            }
-            else {
+            } else {
                 querySuffix = "WHERE user_id = 9999";
             }
 
-            String query = "SELECT COUNT(*) as total FROM transaction " + querySuffix;
+            String methodStr = "";
+
+            if (method.equals("count")) {
+                methodStr = "COUNT(*)";
+            } else {
+                methodStr = "SUM(valor_total)";
+            }
+
+            String query = "SELECT " + methodStr + " as total FROM transaction " + querySuffix;
             PreparedStatement stmt = connection.getConnection().prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             Integer total = 0;
@@ -88,6 +98,32 @@ public class TransacaoDAO {
             System.out.println(e.getMessage());
         }
         return "";
+    }
+
+    public static List<DadosGrafico> getTotalBySession() {
+        List<DadosGrafico> totalBySession = new ArrayList<>();
+
+        try {
+            DB connection = new DB();
+
+            String query = "SELECT session.id, SUM(CASE WHEN user_id = 9999 THEN valor_total ELSE 0 END) as total_bilheteria, SUM(CASE WHEN user_id != 9999 THEN valor_total ELSE 0 END) as total_site FROM session LEFT JOIN transaction ON session.id = transaction.sessao_id GROUP BY id";
+            PreparedStatement stmt = connection.getConnection().prepareStatement(query);
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs != null && rs.next()) {
+                totalBySession.add(new DadosGrafico(rs.getString("id"),
+                        rs.getDouble("total_bilheteria"),
+                        rs.getDouble("total_site")));
+            }
+
+            stmt.close();
+            connection.closeConnection();
+            return totalBySession;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return totalBySession;
     }
 
     public static String addTransacaoManual(double valor, String sessao, String qtdeIngressos) {
