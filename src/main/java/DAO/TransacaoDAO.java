@@ -171,8 +171,7 @@ public class TransacaoDAO {
         ResultSet rs = stmt.executeQuery(query);
 
         while (rs != null && rs.next()) {
-            jsonStringParcial.add("{\"date\":\""+rs.getString("data_transacao")+"\"," +
-                                    "\"quantidade\":\""+rs.getString("qtde")+"\"}");
+            jsonStringParcial.add("[\"" + rs.getString("data_transacao") + "\", " + rs.getString("qtde") +"]");
         }
 
         query = "SELECT count(id) as qtde, data_transacao as data_transacao " +
@@ -183,37 +182,45 @@ public class TransacaoDAO {
         stmt = connection.getConnection().prepareStatement(query);
         rs = stmt.executeQuery(query);
 
+
         while (rs != null && rs.next()) {
-            jsonStringParcial1.add("{\"date\":\""+rs.getString("data_transacao")+"\"," +
-                    "\"quantidade\":\""+rs.getString("qtde")+"\"}");
+            jsonStringParcial1.add("[\"" + rs.getString("data_transacao") + "\", " + rs.getString("qtde") +"]");
         }
 
         connection.closeConnection();
-        String concat1 = "";
-        String concat2 = "";
+
+        String concat5 = "";
+        for(int i=0;i<jsonStringParcial1.size();i++)
+        {
+            if(i != jsonStringParcial.size() - 1)
+            {
+                concat5 += jsonStringParcial1.get(i).toString() + ",";
+            }
+            else
+            {
+                concat5 += jsonStringParcial1.get(i).toString();
+            }
+        }
+
+        String concat6 = "";
         for(int i=0;i<jsonStringParcial.size();i++)
         {
             if(i != jsonStringParcial.size() - 1)
             {
-                concat1 += jsonStringParcial.get(i).toString() + ",";
+                concat6 += jsonStringParcial.get(i).toString() + ",";
             }
             else
             {
-                concat1 += jsonStringParcial.get(i).toString();
+                concat6 += jsonStringParcial.get(i).toString();
             }
         }
-        for(int i=0;i<jsonStringParcial1.size();i++)
-        {
-            if(i != jsonStringParcial1.size() - 1)
-            {
-                concat2 += jsonStringParcial1.get(i).toString() + ",";
-            }
-            else
-            {
-                concat2 += jsonStringParcial1.get(i).toString();
-            }
-        }
-        String jsonString = "{\"online\":["+concat1+"]},"+"{\"fisico\":["+concat2+"]}";
+
+        String teste  = "{\"label\":\""+"Fisico"+"\"," +
+                "\"data\":["+concat5+"]}";
+        String teste2 = "{\"label\":\""+"Online"+"\"," +
+                "\"data\":["+concat6+"]}";
+
+        String jsonString = "{\"data\":["+teste+", "+ teste2 + "] }";
         return jsonString;
     }
 }
