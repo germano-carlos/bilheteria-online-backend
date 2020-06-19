@@ -24,5 +24,6 @@ public class Rotas {
         delete("/deleteFilme", FilmeBL::delete);
         get("/getAllMovies", FilmeBL::getAllMoviesEnabledBL);
         get("/filmebyId/:id", FilmeBL::getMovieById);
+        post("/getDataRelatorios", (request, response) -> { return TransacaoBL.getData(request,response); });
     }
 }

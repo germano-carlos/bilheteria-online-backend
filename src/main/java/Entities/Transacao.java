@@ -16,6 +16,8 @@ public class Transacao {
     private boolean aprovado;
     private String nomePagador;
     private List<Armchair> cadeirascompradas;
+    private int countOnline;
+    private int countFisic;
 
     public Transacao(String compradorId, int sessaoId, int qtIngressos, double valorIngresso, double valorTotal, int operadoraId, boolean aprovado) {
         this.compradorId = compradorId;
@@ -93,6 +95,22 @@ public class Transacao {
 
     public int getOperadoraId() {
         return operadoraId;
+    }
+
+    public int getCountFisic() {
+        return this.countFisic;
+    }
+
+    public void setCountFisic(int countFisic) {
+        this.countFisic = countFisic;
+    }
+
+    public int getCountOnline() {
+        return this.countOnline;
+    }
+
+    public void setCountOnline(int countOnline) {
+        this.countOnline =  countOnline;
     }
 
     public JsonObject to_Object(Transacao transaction)
