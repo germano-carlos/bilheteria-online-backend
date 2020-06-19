@@ -1,6 +1,7 @@
 import Utils.Rotas;
 
 import static spark.Spark.*;
+import static spark.Spark.init;
 
 public class Main {
 

@@ -6,6 +6,7 @@ import Entities.Armchair;
 import Entities.Operadora;
 import Entities.Transacao;
 import Entities.Usuario;
+import Enums.Permissao;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import spark.Request;
@@ -95,5 +96,19 @@ public class TransacaoBL {
         String qtdeIngressos = params.get("qtdeIngressos").toString().replace("\"", "");
 
         return TransacaoDAO.addTransacaoManual(valor, sessao, qtdeIngressos);
+    }
+
+    public static String getData(Request request, Response response) throws Exception {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject params = (JsonObject) jsonParser.parse(request.body());
+
+        JsonObject user = UsuarioBL.loginBL(request, response);
+
+        if(request.session().attribute("userPermission") == Permissao.FULLACESS.toString())
+        {
+            return (TransacaoDAO.getData(request,response));
+        }
+
+        return null;
     }
 }

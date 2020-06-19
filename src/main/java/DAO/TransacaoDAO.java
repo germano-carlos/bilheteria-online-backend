@@ -8,17 +8,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import spark.Request;
+import spark.Response;
 
 public class TransacaoDAO {
 
     public static void add(Transacao transacao) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String dateString = dateFormat.format(date);
         try {
             DB connection = new DB();
-            String sql = "INSERT INTO transaction (user_id, sessao_id, qt_ingresso, valor_ingressos, valor_total, operadora_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO transaction (user_id, sessao_id, qt_ingresso, valor_ingressos, valor_total, operadora_id, status, data_transacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
             stmt.setString(1, transacao.getCompradorId());
             stmt.setString(2, Integer.toString(transacao.getSessaoId()));
@@ -27,6 +35,7 @@ public class TransacaoDAO {
             stmt.setString(5, Double.toString(transacao.getValorTotal()));
             stmt.setString(6, Integer.toString(transacao.getOperadoraId()));
             stmt.setString(7, "1");
+            stmt.setString(8, dateString);
             stmt.execute();
             stmt.close();
             connection.closeConnection();
@@ -145,5 +154,66 @@ public class TransacaoDAO {
             System.out.println(e.getMessage());
         }
         return "";
+    }
+
+    public static String getData(Request request, Response response) throws SQLException, ClassNotFoundException {
+
+        List<String> jsonStringParcial = new ArrayList<String>();
+        List<String> jsonStringParcial1 = new ArrayList<String>();
+
+        DB connection = new DB();
+        String query = "SELECT count(id) as qtde, data_transacao as data_transacao " +
+                        "FROM `alinkdig_bilheteria-digital`.transaction " +
+                        "WHERE user_id != '9999'" +
+                        "GROUP BY data_transacao";
+
+        PreparedStatement stmt = connection.getConnection().prepareStatement(query);
+        ResultSet rs = stmt.executeQuery(query);
+
+        while (rs != null && rs.next()) {
+            jsonStringParcial.add("{\"date\":\""+rs.getString("data_transacao")+"\"," +
+                                    "\"quantidade\":\""+rs.getString("qtde")+"\"}");
+        }
+
+        query = "SELECT count(id) as qtde, data_transacao as data_transacao " +
+                "FROM `alinkdig_bilheteria-digital`.transaction " +
+                "WHERE user_id = '9999'" +
+                "GROUP BY data_transacao";
+
+        stmt = connection.getConnection().prepareStatement(query);
+        rs = stmt.executeQuery(query);
+
+        while (rs != null && rs.next()) {
+            jsonStringParcial1.add("{\"date\":\""+rs.getString("data_transacao")+"\"," +
+                    "\"quantidade\":\""+rs.getString("qtde")+"\"}");
+        }
+
+        connection.closeConnection();
+        String concat1 = "";
+        String concat2 = "";
+        for(int i=0;i<jsonStringParcial.size();i++)
+        {
+            if(i != jsonStringParcial.size() - 1)
+            {
+                concat1 += jsonStringParcial.get(i).toString() + ",";
+            }
+            else
+            {
+                concat1 += jsonStringParcial.get(i).toString();
+            }
+        }
+        for(int i=0;i<jsonStringParcial1.size();i++)
+        {
+            if(i != jsonStringParcial1.size() - 1)
+            {
+                concat2 += jsonStringParcial1.get(i).toString() + ",";
+            }
+            else
+            {
+                concat2 += jsonStringParcial1.get(i).toString();
+            }
+        }
+        String jsonString = "{\"online\":["+concat1+"]},"+"{\"fisico\":["+concat2+"]}";
+        return jsonString;
     }
 }
