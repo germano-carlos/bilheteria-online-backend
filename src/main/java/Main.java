@@ -1,11 +1,11 @@
 import Utils.Rotas;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.port;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        init();
         port(getHerokuAssignedPort());
         get("/hello", (req, res) -> "Hello Heroku World");
         Cors cors = new Cors();
