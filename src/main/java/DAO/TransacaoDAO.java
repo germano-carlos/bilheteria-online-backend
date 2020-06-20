@@ -165,7 +165,7 @@ public class TransacaoDAO {
         String query = "SELECT count(id) as qtde, data_transacao as data_transacao " +
                         "FROM `alinkdig_bilheteria-digital`.transaction " +
                         "WHERE user_id != '9999'" +
-                        "GROUP BY data_transacao";
+                        "GROUP BY DAY(data_transacao)";
 
         PreparedStatement stmt = connection.getConnection().prepareStatement(query);
         ResultSet rs = stmt.executeQuery(query);
@@ -177,7 +177,7 @@ public class TransacaoDAO {
         query = "SELECT count(id) as qtde, data_transacao as data_transacao " +
                 "FROM `alinkdig_bilheteria-digital`.transaction " +
                 "WHERE user_id = '9999'" +
-                "GROUP BY data_transacao";
+                "GROUP BY DAY(data_transacao)";
 
         stmt = connection.getConnection().prepareStatement(query);
         rs = stmt.executeQuery(query);
