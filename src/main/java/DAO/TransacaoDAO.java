@@ -192,7 +192,7 @@ public class TransacaoDAO {
         String concat5 = "";
         for(int i=0;i<jsonStringParcial1.size();i++)
         {
-            if(i != jsonStringParcial.size() - 1)
+            if(i != jsonStringParcial1.size() - 1)
             {
                 concat5 += jsonStringParcial1.get(i).toString() + ",";
             }
